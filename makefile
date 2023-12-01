@@ -1,18 +1,16 @@
-IDIR =../include
-CC=gcc
-CFLAGS=-I$(IDIR)
+IDIR = include
+CC = gcc
+CFLAGS = -I$(IDIR)
 
-ODIR=obj
-LDIR =../lib
-
-LIBS=-lm
+ODIR = obj
+LIB = lib
+LIBS = -lm
 
 _DEPS = extensions.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 _OBJ = unitinu.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
-
 
 $(ODIR)/%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
@@ -23,4 +21,4 @@ unitinu: $(OBJ)
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ 
+	rm -f $(ODIR)/*.o *~ core $(IDIR)/*~ unitinu

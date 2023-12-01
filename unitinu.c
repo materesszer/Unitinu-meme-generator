@@ -1,5 +1,8 @@
 #include <stdio.h>
-#include "extensions.h"
+#include <stdlib.h>
+#include "include/extensions.h"
+
+void manipulate_image(int height,int width, RGBTRIPLE image[height][width]);
 
 int main(int argc, char* argv[])
 {
@@ -58,7 +61,39 @@ int main(int argc, char* argv[])
         fseek(inp, padding, SEEK_CUR);
     }
 
+    manipulate_image(height, width, image);
+
+    fwrite(&bfheader, sizeof(BITMAPFILEHEADER), 1, out);
+    fwrite(&biheader, sizeof(BITMAPINFOHEADER), 1, out);
+
+    for (int i = 0; i < height; i++)
+    {
+        fwrite(image[i], sizeof(RGBTRIPLE), width, out);
+        
+        for (int i = 0; i < padding; i++)
+        {
+            fputc(0x00, out);
+        }
+    }
+
+    printf("Image unitinu-ified successfully! result: %s\n", outname);
+
+    free(image);
 
     fclose(inp);
     fclose(out);
+}
+
+void manipulate_image(int height,int width, RGBTRIPLE image[height][width])
+{
+    RGBTRIPLE* temp;
+
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = width / 2; j < width; j++)
+        {
+            image[i][j] = image[i][width - j - 1];
+        }
+    }
+
 }
