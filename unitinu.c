@@ -66,8 +66,6 @@ int main(int argc, char* argv[])
 
 void manipulate_image(int height,int width, RGBTRIPLE image[height][width])
 {
-    RGBTRIPLE* temp;
-
     for (int i = 0; i < height; i++)
     {
         for (int j = width / 2; j < width; j++)
@@ -75,7 +73,6 @@ void manipulate_image(int height,int width, RGBTRIPLE image[height][width])
             image[i][j] = image[i][width - j - 1];
         }
     }
-
 }
 
 void print_start()
